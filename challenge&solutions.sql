@@ -178,5 +178,46 @@ use blue_patagon;
 	LEFT JOIN  categorias c ON p.categoria_id = c.categoria_id;
 
 
+/*
+	13) Listar las regiones que aún no cuenten con un proveedor
+	Mostrar : Nombre de la Región
+*/
+
+        SELECT     r.region_nombre AS 'Nombre de la region'
+		
+        FROM       region r
+		
+        LEFT JOIN  proveedores p ON r.region_id = p.proveedor_region
+		
+        WHERE      p.proveedor_id IS NULL;
+
+
+/*
+	14) Listar los clientes que no entraron en mora
+	    Mostrar: Nombre del cliente, Contacto del cliente
+*/
+
+        SELECT     c.cliente_nombre   AS 'Nombre del cliente',
+                   c.cliente_contacto AS 'Contacto del cliente'
+		
+        FROM       clientes c
+		
+        LEFT JOIN  clientes_morosos cm ON c.cliente_id = cm.cliente_id
+		
+        WHERE      cm.cliente_id IS NULL;
+
+
+/*
+	15) Listar el monto total de mora de los clientes Bay y Maria Anders
+		Mostrar: Monto total de mora (De ambos clientes)
+*/
+
+        SELECT COALESCE(SUM(cm.mora), 0) AS Monto_Total_de_Mora
+		
+        FROM   clientes_morosos cm
+		
+        JOIN   clientes c ON cm.cliente_id = c.cliente_id
+		
+        WHERE  c.cliente_nombre IN ('Bay', 'Maria Anders');
 
 

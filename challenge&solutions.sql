@@ -59,7 +59,7 @@ use blue_patagon;
 		
         FROM        pedidos
 		
-        WHERE YEAR  (pedido_fecha) = 1998;
+        WHERE       YEAR  (pedido_fecha) = 1998;
 
 
 /*

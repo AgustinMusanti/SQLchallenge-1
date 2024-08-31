@@ -64,7 +64,7 @@ use blue_patagon;
 
 /*
 	6) Obtener la cantidad de productos que tiene cada categoría. 
-	   Mostrar: Descripción de la Categoría, Cantidad de Productos
+	   Mostrar: Nombre de la Categoría, Cantidad de Productos
 */
 
         SELECT     c.categoria_nombre   AS 'Categoría', 
@@ -128,8 +128,54 @@ use blue_patagon;
         CALL Actualiza_Precio();
 
 
+/*
+	10) Crear un Stored Procedure 'Actualiza_Descuento’' para que reciba por parámetro un valor de 
+            descuento a realizar y lo sume al ya existente, sólo a los pedidos de los clientes de Portugal y Brasil.
+*/
+
+        DROP PROCEDURE IF EXISTS Actualiza_Descuento;
+
+        DELIMITER //
+        CREATE PROCEDURE Actualiza_Descuento(IN incremento DECIMAL(5,2))
+        BEGIN
+        UPDATE pedidos_detalle dp
+        INNER JOIN pedidos p ON dp.pedido_id = p.pedido_id
+        INNER JOIN clientes c ON p.cliente_id = c.cliente_id
+        SET dp.descuento = dp.descuento + incremento
+        WHERE c.cliente_pais IN ('Portugal', 'Brasil');
+        END //
+        DELIMITER ;        
+ 
+        CALL Actualiza_Descuento(0.05); -- Por ejemplo, si queremos sumar un 5% al descuento actual
 
 
+/*
+	11) Listar la cantidad de unidades en stock para cada uno de los productos que pertenecen a una categoría
+	    Mostrar: Nombre de la categoría, Cantidad de unidades en stock
+*/
+
+        SELECT      c.categoria_nombre    AS "Categoría",
+                    SUM(p.unidades_stock) AS "Cantidad de Unidades en Stock"
+		
+        FROM        productos p
+		
+        INNER JOIN  categorias c ON p.categoria_id = c.categoria_id
+		
+        GROUP BY    c.categoria_nombre;
+
+
+/*
+	12) Listar todos los productos y la categoría a la que pertenecen.
+            Para las categorías desconocidas informar 'Sin Categoría'.
+            Mostrar: Nombre del Producto, Nombre de la Categoría
+*/
+
+        SELECT     p.producto_nombre   AS "Nombre del Producto",
+                   COALESCE(c.categoria_nombre, 'Sin Categoría') AS "Nombre de la Categoría"
+		
+	FROM       productos p
+		
+	LEFT JOIN  categorias c ON p.categoria_id = c.categoria_id;
 
 
 

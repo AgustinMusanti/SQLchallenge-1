@@ -14,4 +14,4 @@ The database for this challenge includes several tables representing different a
 
 - **Database Setup**: The `challengedatabase.sql` file contains the schema and data needed to set up the database. Import this file into your MySQL environment to begin.
 - **Challenges and Solutions**: Each challenge is described in the `challenge&solutions.sql` file, along with my corresponding SQL solutions. This file contains both the challenge descriptions and their solutions.
-- **MySQL Version**: This challenge is developed and tested using MySQL. Ensure you
+- **MySQL Version**: This challenge is developed and tested using MySQL. Ensure you environment is compatible with the provided SQL scripts.

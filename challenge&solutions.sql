@@ -291,6 +291,22 @@ use blue_patagon;
 	 20) Crear alguna vista que sea de utilidad para esta base de datos
 */
 
+          -- Creamos una vista para ver de forma rapida a los clientes activos que tiene la empresa
+
+          CREATE VIEW     ClientesActivos  AS
+		  
+                 SELECT   c.cliente_id     AS Cliente_ID,
+                          c.cliente_nombre AS Nombre_Cliente
+		  
+                 FROM     clientes c
+		  
+                 JOIN     pedidos p ON c.cliente_id = p.cliente_id
+		  
+                 GROUP BY c.cliente_id, c.cliente_nombre;
+
+           -- Para utilizarla efectuamos la siguiente consulta:
+
+           SELECT * FROM ClientesActivos;
          
 
         ##########################################################################################

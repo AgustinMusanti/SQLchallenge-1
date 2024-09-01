@@ -221,3 +221,30 @@ use blue_patagon;
         WHERE  c.cliente_nombre IN ('Bay', 'Maria Anders');
 
 
+/*
+	16) Listar a todos los empleados y a su jefe (Según a quién reporta el empleado)
+	Mostrar : Nombre del Empleado, Nombre del Jefe
+*/
+
+        SELECT empleado_nombre    AS 'Nombre del Empleado',
+	       empleado_reporta_a AS 'Nombre del jefe'
+		
+        FROM   empleados
+		
+	WHERE  empleado_reporta_a IS NOT NULL;
+
+
+/*
+	17) Listar a todos los empleados y a su jefe (Según a quién reporta el empleado).
+	    Para el caso de los empleados que no reportan a nadie informar "Sin Jefe"
+	    Mostrar : Nombre del Empleado, Nombre del Jefe
+*/
+
+        SELECT 	empleado_nombre AS 'Nombre del Empleado',
+		COALESCE(empleado_reporta_a,'Sin jefe') AS 'Nombre del jefe'
+		
+        FROM empleados;
+
+
+
+

@@ -245,6 +245,50 @@ use blue_patagon;
 		
         FROM empleados;
 
+/*
+	18) Crear una tabla llamada Clientes_Inactivos 
+	    Campos: Cliente_Id nchar(5) not null, Cliente_Nombre varchar(20) null
+*/
+
+        DROP TABLE IF EXISTS Clientes_Inactivos;
+    
+        CREATE TABLE         Clientes_Inactivos 
+	(
+        Cliente_Id NCHAR(5)  NOT NULL,
+	Cliente_Nombre VARCHAR(20) NULL
+	);
+
+
+/*
+	21) Insertar en la tabla Clientes_Inactivos a aquellos clientes que no hayan realizado pedidos
+*/
+
+        -- Utilizo un sp para auomatizar este proceso
+        DELIMITER //
+
+        CREATE PROCEDURE InsertarClientesInactivos()
+        BEGIN
+        -- Primero limino registros anteriores de la tabla Clientes_Inactivos para poder actualizar
+        DELETE FROM Clientes_Inactivos;
+    
+        -- Luego inserto los clientes que no han realizado pedidos
+        INSERT INTO Clientes_Inactivos (Cliente_Id, Cliente_Nombre)
+        SELECT c.cliente_id, c.cliente_nombre
+        FROM clientes c
+        LEFT JOIN pedidos p ON c.cliente_id = p.cliente_id
+        WHERE p.pedido_id IS NULL;
+        END //
+
+        DELIMITER ;
+
+        -- Desactivo el "self-update" temporalmente antes de llamar al sp usando:
+
+        SET SQL_SAFE_UPDATES = 0;
+
+        CALL InsertarClientesInactivos();
+
+
+        ##########################################################################################
 
 
 

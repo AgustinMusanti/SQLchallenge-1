@@ -260,7 +260,7 @@ use blue_patagon;
 
 
 /*
-	21) Insertar en la tabla Clientes_Inactivos a aquellos clientes que no hayan realizado pedidos
+	19) Insertar en la tabla Clientes_Inactivos a aquellos clientes que no hayan realizado pedidos
 */
 
         -- Utilizo un sp para auomatizar este proceso
@@ -287,6 +287,11 @@ use blue_patagon;
 
         CALL InsertarClientesInactivos();
 
+/*
+	 20) Crear alguna vista que sea de utilidad para esta base de datos
+*/
+
+         
 
         ##########################################################################################
 
